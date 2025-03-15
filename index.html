@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="quiz.js" defer></script>
+</head>
+<body>
+    <h1>Cuestionario contrareloj</h1>
+    <div id="categories">Categorias</div>
+    <button onclick="startQuiz()">Comenzar</button>
+    <div id="progressBar_container">
+        <div id="progressBar">Barra de progreso</div>
+    </div>
+    <div id="timer">Tiempo:</div>
+    <div id="question_container">
+        <div id="question"></div>
+        <div id="options">
+            <button class="options" id="option1" onclick="checkAnswer(0)">Opcion 1</button>
+            <button class="options" id="option2" onclick="checkAnswer(1)">Opcion 2</button>
+            <button class="options" id="option3" onclick="checkAnswer(2)">Opcion 3</button>
+            <button class="options" id="option4" onclick="checkAnswer(3)">Opcion 4</button>
+        </div>
+        <button id="next" onclick="nextQuestion()">Siguiente</button>
+    </div>
+    <div id="score">Puntaje:</div>
+
+
+
+    
+</body>
+</html>
