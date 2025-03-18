@@ -3,7 +3,6 @@
 const categoriesText = document.getElementById("categories");
 const categories = Object.keys(questions); //in questions.js
 const question = document.getElementById("question");
-const options = Array.from(document.getElementsByClassName("option"));  // Array.from converts the HTMLCollection to an array
 const divOptions = document.getElementById("options");
 const scoreText = document.getElementById("score");
 const progressBar = document.getElementById("progressBar");
@@ -18,13 +17,14 @@ const time = 10
 const timeOut = 2000
 
 
+let options;
 let currentQuestion;
 let score;
 let timer
 let interval;
 let quiz;
 // let options
-
+console.log(options);
 
 function showCategories() {
     categoriesText.innerHTML = "";
@@ -55,16 +55,36 @@ function selectCategory(category) {
 
 
 function nextQuestion() {
+    console.log(options);
     clearInterval(interval)
     answer.innerText = ""
     if (currentQuestion < Object.keys(quiz).length) {
         question.innerText = quiz[currentQuestion].question;
-        options.forEach((option, index) => {
-            option.style.backgroundColor = "white";
-            option.style.pointerEvents = "auto";  // Enable the click
-            option.innerText = quiz[currentQuestion].options[index];
+        //Agregar categorias
+        divOptions.innerHTML = "";
+        for (let index = 0; index < Object.keys(quiz).length; index++) {
+            const button = document.createElement("button");
+            button.innerText = quiz[currentQuestion].options[index]
+            button.classList.add("option")
+            button.addEventListener("click",()=> {
+                checkAnswer(index)
+            })
+            // button.setAttribute("onclick",`checkAnswer(${index})`)  //Instead of adding with addEventListener
+            button.style.backgroundColor = "white";
+            button.style.pointerEvents = "auto";
+            divOptions.appendChild(button);
             
-        })
+        }
+        options = Array.from(document.getElementsByClassName("option")) // Array.from converts the HTMLCollection to an array
+        console.log( options);
+
+        // CON BOTONES FIJOS EN HTML
+        // options.forEach((option, index) => {
+        //     option.style.backgroundColor = "white";
+        //     option.style.pointerEvents = "auto";  // Enable the click
+        //     option.innerText = quiz[currentQuestion].options[index];
+            
+        // })
         timer = time;
         // timerText.innerText = "Tiempo: " + timer
         timerText.style.width = `${((timer) / time) * 100}%`;
@@ -124,7 +144,7 @@ function checkAnswer(option) {
     }
     else if (option == -1) {  // Time's up
         // clearInterval(interval)
-        answer.style.color = "black"
+        answer.style.color = "white"
         answer.innerText = "Se terminó el tiempo"
         // options[quiz[currentQuestion].answer].style.backgroundColor = "green";
         options.forEach((option) => {
