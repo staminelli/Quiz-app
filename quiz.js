@@ -1,162 +1,64 @@
 
-const capitals = [
-    {
-        question: "¿Cuál es la capital de Francia?",
-        options: ["París", "Londres", "Berlín", "Madrid"],
-        answer: 0
-    },
-    {
-        question: "¿Cuál es la capital de Alemania?",
-        options: ["París", "Londres", "Berlín", "Madrid"],
-        answer: 2
-    },
-    {
-        question: "¿Cuál es la capital de España?",
-        options: ["París", "Londres", "Berlín", "Madrid"],
-        answer: 3
-    },
-    {
-        question: "¿Cuál es la capital de Inglaterra?",
-        options: ["París", "Londres", "Berlín", "Madrid"],
-        answer: 1
-    }
-]
-
-const animals = [
-    {
-        question: "¿Cuál es el animal más grande del mundo?",
-        options: ["Elefante", "Ballena Azul", "Jirafa", "Tiburón Blanco"],
-        answer: 1
-    },
-    {
-        question: "¿Cuál es el animal más rápido del mundo?",
-        options: ["Guepardo", "León", "Leopardo", "Tigre"],
-        answer: 0
-    },
-    {
-        question: "¿Cuál es el animal más venenoso del mundo?",
-        options: ["Araña de Sídney", "Cobra", "Pez Piedra", "Escorpión"],
-        answer: 2
-    },
-    {
-        question: "¿Cuál es el animal más fuerte del mundo?",
-        options: ["Elefante", "Rinoceronte", "Hipopótamo", "Gorila"],
-        answer: 3
-    }
-]
-const geography = [
-    {
-        question: "¿En qué continente se encuentra el país de Kenia?",
-        options: ["Asia", "África", "Europa", "Oceanía"],
-        answer: 1
-    },
-    {
-        question: "¿Cuál es el río más largo del mundo?",
-        options: ["Amazonas", "Nilo", "Yangtsé", "Misisipi"],
-        answer: 0
-    },
-    {
-        question: "¿Cuál es el país más grande del mundo?",
-        options: ["Rusia", "Canadá", "China", "Estados Unidos"],
-        answer: 0
-    },
-    {
-        question: "¿Cuál es el país más pequeño del mundo?",
-        options: ["Mónaco", "Vaticano", "San Marino", "Liechtenstein"],
-        answer: 1
-    }
-];
-
-const historia = [
-    {
-        question: "¿En qué año se descubrió América?",
-        options: ["1492", "1498", "1500", "1502"],
-        answer: 0
-    },
-    {
-        question: "¿En qué año se inició la Primera Guerra Mundial?",
-        options: ["1914", "1916", "1918", "1920"],
-        answer: 0
-    },
-    {
-        question: "¿En qué año se inició la Segunda Guerra Mundial?",
-        options: ["1939", "1940", "1941", "1942"],
-        answer: 0
-    },
-    {
-        question: "¿En qué año se produjo la Revolución Rusa?",
-        options: ["1917", "1918", "1919", "1920"],
-        answer: 0
-    }
-];
-
-const art = [
-    {
-        question: "¿Quién pintó la Mona Lisa?",
-        options: ["Leonardo Da Vinci", "Miguel Ángel", "Rafael", "Donatello"],
-        answer: 0
-    },
-    {
-        question: "¿Quién pintó la Capilla Sixtina?",
-        options: ["Leonardo Da Vinci", "Miguel Ángel", "Rafael", "Donatello"],
-        answer: 1
-    },
-    {
-        question: "¿Quién pintó Las Meninas?",
-        options: ["Leonardo Da Vinci", "Miguel Ángel", "Rafael", "Velázquez"],
-        answer: 3
-    },
-    {
-        question: "¿Quién pintó Guernica?",
-        options: ["Leonardo Da Vinci", "Miguel Ángel", "Rafael", "Picasso"],
-        answer: 3
-    }
-];
 
 const categoriesText = document.getElementById("categories");
-const categories = [capitals, animals, geography, historia, art]  // ??
+const categories = Object.keys(questions); //in questions.js
 const question = document.getElementById("question");
-const options = Array.from(document.getElementsByClassName("options"));  // ??
+const options = Array.from(document.getElementsByClassName("option"));  // Array.from converts the HTMLCollection to an array
+const divOptions = document.getElementById("options");
 const scoreText = document.getElementById("score");
 const progressBar = document.getElementById("progressBar");
 const progressBarContainer = document.getElementById("progressBar_container");
-const question_container = document.getElementById("question-container");
+const question_container = document.getElementById("question_container");
 const timerText = document.getElementById("timer");
+// const nextButton = document.getElementById("next");
+const restartButton = document.getElementById("restart");
+const answer = document.getElementById("answer")
+const time = 10
+const timeOut = 2000
 
 
-
-let currentQuestion = 0;
-let score = 0;
+let currentQuestion;
+let score;
 let timer
 let interval;
-// let progress = "20%";
+let quiz;
 
 
+function showCategories() {
+    categoriesText.innerHTML = "";
+    categories.forEach((category) => {
+        const button = document.createElement("button");
+        button.innerText = category.toUpperCase();
+        button.classList.add("btn");
+        button.addEventListener("click", () => {
+            selectCategory(category);
+        })
+        categoriesText.appendChild(button);
+    })
+}
 
-function startQuiz() {
+function selectCategory(category) {
+    quiz = questions[category];
+    categoriesText.style.display = "none";
+    divOptions.style.display = "flex"
     currentQuestion = 0;
     score = 0;
-    options.forEach((option) => {
-        option.style.visibility = "visible";
-    })
-    scoreText.style.display = "block";
-    timerText.style.visibility = "visible";
-    progressBarContainer.style.visibility = "visible";
+    showQuiz();
     nextQuestion();
 }
 
+
 function nextQuestion() {
-    if (currentQuestion < capitals.length) {
-        options.forEach((option) => {
+    clearInterval(interval)
+    answer.innerText = ""
+    if (currentQuestion < Object.keys(quiz).length) {
+        question.innerText = quiz[currentQuestion].question;
+        options.forEach((option, index) => {
             option.style.backgroundColor = "white";
             option.style.pointerEvents = "auto";  // Enable the click
+            option.innerText = quiz[currentQuestion].options[index];
         })
-        question.innerText = capitals[currentQuestion].question;
-        
-        options.forEach((option, index) => {
-            option.innerText = capitals[currentQuestion].options[index];
-        })
-        timer = 10;
+        timer = time;
         timerText.innerText = "Tiempo: " + timer
         interval = setInterval(() => {
             timer--;
@@ -167,100 +69,94 @@ function nextQuestion() {
                 timerText.innerText = "Tiempo: 0"
                 setTimeout(() => {
                     nextQuestion();
-                }, 2000);
+                }, timeOut);
                 
             }
         }, 1000);
-        console.log(typeof(interval));
-        scoreText.innerText = `Score: ${score}`;
-        progressBar.style.width = `${(currentQuestion / capitals.length) * 100}%`;
-        progressBar.innerText = `${(currentQuestion / capitals.length) * 100}%`;
+        // scoreText.innerText = `Score: ${score}`;
+        progressBar.style.width = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
+        progressBar.innerText = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
 
-    } else {
-        question.innerText = "Tu puntaje es: " + score;
-        options.forEach((option) => {
-            option.innerText = "";
-            option.style.visibility = "hidden";
-        })
-        
-        
-        // question_container.style.display = "none";
-        clearInterval(interval);
+    } else {  //Fin del juego
         timerText.style.visibility = "hidden";
-        scoreText.style.display = "none";
-        progressBar.style.width = `${(currentQuestion / capitals.length) * 100}%`;
-        progressBar.innerText = `${(currentQuestion / capitals.length) * 100}%`;
+        question.innerText = "Fin del juego\nTu puntaje es: " + score;
+        divOptions.style.display = "none"
+        clearInterval(interval);
+        // hideUI();
+        progressBar.style.width = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
+        progressBar.innerText = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
+        restartButton.style.visibility = "visible";
     }
 }
 
+function showQuiz() {
+    // scoreText.style.visibility = "visible";
+    timerText.style.visibility = "visible";
+    progressBarContainer.style.display = "block"
+    divOptions.style.display = "flex"
+    question_container.style.visibility = "visible";
+}
+
+function hideQuiz() {
+    progressBarContainer.style.display = "none"
+    timerText.style.visibility = "hidden";
+    question_container.style.visibility = "hidden";
+    divOptions.style.display = "none"
+    // scoreText.style.visibility = "hidden";
+}
+
 function checkAnswer(option) {
-    if (option == capitals[currentQuestion].answer) {
+    if (option == quiz[currentQuestion].answer) { // Correct answer
         score+=timer;
         clearInterval(interval);
-        options[option].style.backgroundColor = "green";
-        scoreText.innerText = `Score: ${score}`;
+        options[option].style.backgroundColor = "darkseagreen";
+        // scoreText.innerText = `Score: ${score}`;
+        answer.style.color = "green"
+        answer.innerText = "Respuesta correcta"
         options.forEach((option) => {
             option.style.pointerEvents = "none";  // Disable the click
         })
+        setTimeout(() => {
+            nextQuestion();
+        }, timeOut);
     }
-    else if (option == -1) {
-        options[capitals[currentQuestion].answer].style.backgroundColor = "green";
+    else if (option == -1) {  // Time's up
+        // clearInterval(interval)
+        answer.style.color = "black"
+        answer.innerText = "Se terminó el tiempo"
+        // options[quiz[currentQuestion].answer].style.backgroundColor = "green";
         options.forEach((option) => {
             option.style.pointerEvents = "none";  // Disable the click
         })
+        setTimeout(() => {
+            nextQuestion();
+        }, timeOut);
     }
-    else {
+    else { // Wrong answer
+        clearInterval(interval);
+        answer.style.color = "red"
+        answer.innerText = "Respuesta incorrecta"
         options[option].style.backgroundColor = "red";
-        options[capitals[currentQuestion].answer].style.backgroundColor = "green";
+        // options[quiz[currentQuestion].answer].style.backgroundColor = "darkseagreen";
         options.forEach((option) => {
             option.style.pointerEvents = "none";  // Disable the click
         })
+        setTimeout(() => {
+            nextQuestion();
+        }, timeOut);
     }
     currentQuestion++;
     
 }
 
-function selectCategory(category) {
-    switch (category) {
-        case "capitals":
-            capitals.sort(() => Math.random() - 0.5);
-            nextQuestion();
-            break;
-        case "animals":
-            animals.sort(() => Math.random() - 0.5);
-            nextQuestion();
-            break;
-        case "geography":
-            geography.sort(() => Math.random() - 0.5);
-            nextQuestion();
-            break;
-        case "history":
-            history.sort(() => Math.random() - 0.5);
-            nextQuestion();
-            break;
-        case "art":
-            art.sort(() => Math.random() - 0.5);
-            nextQuestion();
-            break;
-    }
+function restart() {
+    hideQuiz();
+    restartButton.style.visibility = "hidden";
+    categoriesText.style.display = "grid";
+    showCategories();
 }
 
-function showUI() {
-    scoreText.style.display = "block";
-    timerText.style.visibility = "visible";
-    progressBarContainer.style.visibility = "visible";
-    options.forEach((option) => {
-        option.style.visibility = "visible";
-    })
-}
-
-function hideUI() {
-    scoreText.style.display = "none";
-    timerText.style.visibility = "hidden";
-    progressBarContainer.style.visibility = "hidden";
-}
-
-
+restart();
 
 
 
