@@ -10,6 +10,7 @@ const progressBar = document.getElementById("progressBar");
 const progressBarContainer = document.getElementById("progressBar_container");
 const question_container = document.getElementById("question_container");
 const timerText = document.getElementById("timer");
+const timerContainer = document.getElementById("timer_container")
 // const nextButton = document.getElementById("next");
 const restartButton = document.getElementById("restart");
 const answer = document.getElementById("answer")
@@ -22,6 +23,7 @@ let score;
 let timer
 let interval;
 let quiz;
+// let options
 
 
 function showCategories() {
@@ -43,7 +45,11 @@ function selectCategory(category) {
     divOptions.style.display = "flex"
     currentQuestion = 0;
     score = 0;
-    showQuiz();
+    progressBarContainer.style.display = "block"
+    timerText.style.visibility = "visible";
+    timerContainer.style.display = "block";
+    question_container.style.visibility = "visible";
+    divOptions.style.display = "flex"
     nextQuestion();
 }
 
@@ -57,16 +63,29 @@ function nextQuestion() {
             option.style.backgroundColor = "white";
             option.style.pointerEvents = "auto";  // Enable the click
             option.innerText = quiz[currentQuestion].options[index];
+            
         })
         timer = time;
-        timerText.innerText = "Tiempo: " + timer
+        // timerText.innerText = "Tiempo: " + timer
+        timerText.style.width = `${((timer) / time) * 100}%`;
         interval = setInterval(() => {
             timer--;
-            timerText.innerText = "Tiempo: " + timer;
-            if (timer == 0) {
-                clearInterval(interval);
+            // timerText.innerText = "Tiempo: " + timer;
+            timerText.style.width = `${((timer) / time) * 100}%`;
+            if (timer >= time - 3){
+                timerText.style.backgroundColor = "#0f0"
+            }
+            else if (timer >= time -6){
+                timerText.style.backgroundColor = "yellow"
+            }
+            else {
+                timerText.style.backgroundColor = "red"
+            }
+            if (timer < 0) {
+                clearInterval(interval)
+                timerText.style.backgroundColor = "green"
                 checkAnswer(-1);
-                timerText.innerText = "Tiempo: 0"
+                // timerText.innerText = "Tiempo: 0"
                 setTimeout(() => {
                     nextQuestion();
                 }, timeOut);
@@ -77,37 +96,20 @@ function nextQuestion() {
         progressBar.style.width = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
         progressBar.innerText = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
 
-    } else {  //Fin del juego
+    } else {  //End of game
         timerText.style.visibility = "hidden";
-        question.innerText = "Fin del juego\nTu puntaje es: " + score;
+        question.innerText = "Fin del juego\nTu puntaje es: " + score + "/" + time*Object.keys(quiz).length;
         divOptions.style.display = "none"
         clearInterval(interval);
-        // hideUI();
         progressBar.style.width = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
         progressBar.innerText = `${(currentQuestion / Object.keys(quiz).length) * 100}%`;
         restartButton.style.visibility = "visible";
     }
 }
 
-function showQuiz() {
-    // scoreText.style.visibility = "visible";
-    timerText.style.visibility = "visible";
-    progressBarContainer.style.display = "block"
-    divOptions.style.display = "flex"
-    question_container.style.visibility = "visible";
-}
-
-function hideQuiz() {
-    progressBarContainer.style.display = "none"
-    timerText.style.visibility = "hidden";
-    question_container.style.visibility = "hidden";
-    divOptions.style.display = "none"
-    // scoreText.style.visibility = "hidden";
-}
-
 function checkAnswer(option) {
     if (option == quiz[currentQuestion].answer) { // Correct answer
-        score+=timer;
+        score += timer;
         clearInterval(interval);
         options[option].style.backgroundColor = "darkseagreen";
         // scoreText.innerText = `Score: ${score}`;
@@ -150,9 +152,14 @@ function checkAnswer(option) {
 }
 
 function restart() {
-    hideQuiz();
+    progressBarContainer.style.display = "none"
+    timerText.style.visibility = "hidden";
+    question_container.style.visibility = "hidden";
+    divOptions.style.display = "none"
     restartButton.style.visibility = "hidden";
     categoriesText.style.display = "grid";
+    timerText.style.backgroundColor = "green"
+    timerContainer.style.display = "none"
     showCategories();
 }
 
