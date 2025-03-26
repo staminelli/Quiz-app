@@ -10,6 +10,25 @@
 </head>
 <body>
     <h1>Cuestionario contrareloj</h1>
+    <div id="home_buttons_container"> 
+        <button id="playButton" class="btn">Jugar</button>
+        <button id="rankingButton" class="btn">Mostrar Ranking</button>
+    </div> 
+    <div id="players">Ingresa tu nombre:
+        <input type="text" name="name_input" id="name_input">
+    </div>
+    <div id="ranking_container">Ranking
+        <table id="ranking">
+            <tr>
+                <th>Jugador</th>
+                <th>Puntaje</th>
+            </tr>
+            <!-- <tr id="listPlayers">
+                <td>player1</td>
+                <td>40</td>
+            </tr> -->
+        </table>
+    </div>
     <div id="categories"></div>
     <!-- <button onclick="startQuiz()">Comenzar</button> -->
     <div id="progressBar_container">
@@ -28,7 +47,8 @@
             <button class="option" id="option4" onclick="checkAnswer(3)">Opcion 4</button> -->
         </div>
     </div>
-    <button id="restart" onclick="restart()">Reiniciar</button>
+    <button id="restart" class="reset_btn" onclick="restart()">Volver a jugar</button>
+    <button id="start" class="reset_btn" onclick="start()">Inicio</button>
     <div id="score">Puntaje:</div>
 </body>
 </html>
