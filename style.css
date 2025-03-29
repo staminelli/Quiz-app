@@ -1,6 +1,42 @@
+:root {
+    --primary-color: #f44336;
+    --secondary-color: #2196f3;
+    --dark-color: #333;
+    --light-color: #f4f4f4;
+    --danger-color: #dc3545;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --border-radius: 5px;
+
+}   
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
 body {
     background-color: #444;
     color: #fff;
+    text-align: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+table{
+    margin: 50px auto;
+    border-collapse: collapse;
+    width: 400px;
+    height: 50vh;
+    color: #fff;
+    font-size: 25px;
+    /* text-align: left; */
+    
+}
+tr, td, th{
+    border: 1px solid #ddd;
+    padding: 4px 8px;
     text-align: center;
 }
 
@@ -69,17 +105,21 @@ body {
 
 }
 
+
+
+/* 
 #score
 {
     font-size: 20px;
     font-weight: bold;
     color: #00f;
     visibility: hidden;
-}
+} 
+*/
 
 #question_container
 {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
@@ -93,7 +133,7 @@ body {
     padding: 10px;
     height: 300px;
     width: 500px;
-    visibility: hidden;
+    /* visibility: hidden; */
     /* background-color: azure; */
 }
 
@@ -153,7 +193,7 @@ body {
 
 .reset_btn
 {
-    display: block;
+    display: none;
     background-color: #f44336;
     border: none;
     color: white;
@@ -162,12 +202,18 @@ body {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    margin: 0 auto;
+    margin: 10px auto;
     cursor: pointer;
     border-radius: 5px;
-    visibility: hidden;
-}
+    /* visibility: hidden; */
+    /* position: relative; */
+    /* bottom: 10px; */
+    /* left: 0; */
+    /* right: 0; */
+    /* margin-bottom: 10px; */
+} 
 
 #answer {
     height: 2px;
 }
+
