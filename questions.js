@@ -19,6 +19,11 @@ const questions = {
             question: "¿Cuál es la capital de Inglaterra?",
             options: ["París", "Londres", "Berlín", "Madrid"],
             answer: 1
+        },
+        4: {
+            question: "¿Cuál es la capital de Argentina?",
+            options: ["Buenos Aires", "Londres", "Berlín", "Yugoslavia"],
+            answer: 0
         }
     },
     animales: {

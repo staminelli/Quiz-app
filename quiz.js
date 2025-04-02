@@ -30,9 +30,9 @@ let timer;
 let interval;
 let quiz;
 
-fetch('https://fakestoreapi.com/products')
-    .then(response => response.json())
-    .then(data => console.log(data));
+// fetch('https://fakestoreapi.com/products')
+//     .then(response => response.json())
+//     .then(data => console.log(data));
 
 
 playButton.addEventListener("click", () => {
@@ -61,7 +61,7 @@ rankingButton.addEventListener("click", () => {
     let i = 0;
     while (i < playersList.length && i < 10) {
         rankingTable.insertAdjacentHTML("beforeend", `<tr><td>${i + 1}</td><td>${playersList[i].name}</td><td>${playersList[i].score}</td></tr>`);
-        console.log(i);
+        // console.log(i);
         i++;
     }
     rankingContainer.style.display = "block";
@@ -86,8 +86,11 @@ function showCategories() {
     categoriesText.innerHTML = "";
     categories.forEach((category) => {
         const button = document.createElement("button");
-        button.innerText = category.toUpperCase();
-        button.classList.add("btn");
+        button.innerHTML = `<img src="images/${category}.png" class="category_img">`;
+        button.innerHTML += `<h3 class="h3_card">${category[0].toUpperCase() + category.slice(1)}</h3>` // Capitalize the first letter of the category
+        button.innerHTML += `<p class="p_card">${Object.keys(questions[category]).length} preguntas</p>`;
+        // console.log(questions[category].length());
+        button.classList.add("category_btn");
         button.addEventListener("click", () => {
             selectCategory(category);
         });
@@ -97,6 +100,7 @@ function showCategories() {
 
 function selectCategory(category) {
     quiz = questions[category];
+    console.log(quiz);
     categoriesText.style.display = "none";
     divOptions.style.display = "flex";
     currentQuestion = 0;
@@ -110,7 +114,6 @@ function selectCategory(category) {
 }
 
 function nextQuestion() {
-    console.log(options);
     clearInterval(interval);
     answer.innerText = "";
     timerText.style.transition = "width 0.1s linear, background-color 0.2s linear";
@@ -118,7 +121,8 @@ function nextQuestion() {
     if (currentQuestion < Object.keys(quiz).length) {
         question.innerText = quiz[currentQuestion].question;
         divOptions.innerHTML = ""; //Erase the previuos answers options
-        for (let index = 0; index < Object.keys(quiz).length; index++) {
+        let optionsArray = quiz[currentQuestion].options;
+        for (let index = 0; index < optionsArray.length; index++) {
             const button = document.createElement("button");
             button.innerText = quiz[currentQuestion].options[index];
             button.classList.add("option");
