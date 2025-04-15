@@ -45,3 +45,4 @@ Una aplicación interactiva de preguntas y respuestas donde los usuarios pueden 
 - Implementar un backend para rankings globales.
 - Soporte para modo multijugador en tiempo real.
 - Mejoras en la experiencia de usuario y animaciones.
+- Agregado de opciones para diferentes modos de juego.
