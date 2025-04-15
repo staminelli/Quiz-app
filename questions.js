@@ -24,7 +24,22 @@ const questions = {
             question: "¿Cuál es la capital de Argentina?",
             options: ["Buenos Aires", "Londres", "Berlín", "Yugoslavia"],
             answer: 0
-        }
+        },
+        5: {
+            question: "¿Cuál es la capital de Italia?",
+            options: ["Roma", "Londres", "Berlín", "Madrid"],
+            answer: 0
+        },
+        6: {
+            question: "¿Cuál es la capital de Japón?",
+            options: ["Tokio", "Londres", "Berlín", "Madrid"],
+            answer: 0
+        },
+        7: {
+            question: "¿Cuál es la capital de Brasil?",
+            options: ["Brasilia", "Londres", "Berlín", "Madrid"],
+            answer: 0
+        },
     },
     animales: {
         0: {
