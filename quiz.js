@@ -54,6 +54,16 @@ sortByScore();
 
 console.log(playersList);
 
+function createList() {
+    dataList.innerHTML = ""; // Clear the datalist before adding new options
+    playersList.forEach((player) => {
+        const option = document.createElement("option");
+        option.value = player.name;
+        dataList.appendChild(option);
+    });
+}
+
+createList(); // Call the function to populate the datalist
 
 playButton.addEventListener("click", () => {
     players.style.display = "block";
