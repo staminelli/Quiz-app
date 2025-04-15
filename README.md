@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/c2be37f5-fcca-4026-95df-87a9ce06481f)
+![image](https://github.com/user-attachments/assets/c094ede1-df7d-40f8-9887-a4fca0ace1bf)
+
+
 # Quiz App
 
 Una aplicación interactiva de preguntas y respuestas donde los usuarios pueden poner a prueba sus conocimientos en diferentes categorías. ¡Compite por el mejor puntaje y desafía tus propios récords!
